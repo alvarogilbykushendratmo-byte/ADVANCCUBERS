@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>ADVANCCUBER</title>
+
+<link rel="icon" type="image/jpeg" href="images/ADVANCCUBERlogo.jpeg">
+
+<style>
+
+body{
+    font-family:Arial;
+    text-align:center;
+}
+
+button{
+    font-size:20px;
+    padding:15px 40px;
+    margin:10px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+img{
+    max-width:80%;
+}
+
+.donate{
+    position:fixed;
+    top:15px;
+    right:15px;
+}
+
+
+.watchatula{
+    position:fixed;
+    top:15px;
+    left:15px;
+}
+
+.info{
+    position:fixed;
+    top:80px;
+    right:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="creator">
+    By: Alvaro Gilby Kushendratmo
+</div>
+
+<div id="app"></div>
+
+<script>
+
+function home() {
+
+document.getElementById("app").innerHTML = `
+
+<img src="images/ADVANCCUBERlogo.jpeg" width="180">
+
+<h1>ADVANCECUBER</h1>
+
+<p>Advanced Algorithms & Methods</p>
+
+<h2>Choose your Cube</h2>
+
+<button onclick="twoByTwo()">2x2 Cube</button>
+
+<button onclick="threeByThree()">3x3 Cube</button>
+
+<button class="donate" onclick="donate()">
+    Donate☕
+</button>
+
+<button class="watchatula" onclick="WACHATULA()">Watchatula</button>
+
+<button class="info" onclick="info()">
+    ℹ️ Info
+</button>
+
+`;
+
+}
+
+
+
+function twoByTwo(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>2x2 Methods</h1>
+
+<button onclick="ortega()">Ortega</button>
+
+<button onclick="cll()">CLL</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function ortega(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Ortega</h1>
+
+<button onclick="ortegaOLL()">OLL</button>
+
+<button onclick="ortegaPBL()">PBL</button>
+
+<br><br>
+
+<button onclick="twoByTwo()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function ortegaOLL(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Ortega OLL</h1>
+
+<img src="images/2x2 Ortega OLL.jpeg" width="700">
+
+<br><br>
+
+<button onclick="ortega()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function ortegaPBL(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Ortega PBL</h1>
+
+<img src="images/2x2 Ortega PBL.jpeg" width="700">
+
+<br><br>
+
+<button onclick="ortega()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cll(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>2x2 CLL</h1>
+
+<button onclick="cllSune()">Sune</button>
+<button onclick="cllAntiSune()">Anti-Sune</button>
+
+<br>
+
+<button onclick="cllH()">H</button>
+<button onclick="cllT()">T</button>
+<button onclick="cllU()">U</button>
+
+<br>
+
+<button onclick="cllL()">L</button>
+<button onclick="cllPi()">Pi</button>
+
+<br><br>
+
+<button onclick="twoByTwo()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllSune(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL Sune</h1>
+
+<img src="images/2x2 CLL Sune.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllAntiSune(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL Anti-Sune</h1>
+
+<img src="images/2x2 CLL AntiSune.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllH(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL H</h1>
+
+<img src="images/2x2 CLL H.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllT(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL T</h1>
+
+<img src="images/2x2 CLL T.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllU(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL U</h1>
+
+<img src="images/2x2 CLL U.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllL(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL L</h1>
+
+<img src="images/2x2 CLL L.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function cllPi(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CLL Pi</h1>
+
+<img src="images/2x2 CLL Pi.Jpeg" width="700">
+
+<br><br>
+
+<button onclick="cll()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+function threeByThree(){
+
+document.getElementById("app").innerHTML=`
+
+<button onclick="cfop()">CFOP</button>
+
+<button onclick="roux()">Roux</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+
+`;
+
+}
+
+function cfop(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CFOP</h1>
+
+<button onclick="beginnerOLL()">Beginner OLL</button>
+
+<button onclick="pll()">PLL</button>
+
+<button onclick="fullOLL()">Full OLL</button>
+
+<br><br>
+
+<button onclick="threeByThree()">⬅ Back</button>
+
+`;
+
+}
+
+function beginnerOLL(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Beginner OLL</h1>
+
+<img src="images/3x3 OLL Beginner CFOP.jpeg" width="700">
+
+<br><br>
+
+<button onclick="cfop()">⬅ Back</button>
+
+`;
+
+}
+
+function donate(){
+
+    window.open("https://saweria.co/Pixie666", "_blank");
+
+}
+
+function pll(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>PLL</h1>
+
+<h2>🚧 Coming Soon! 🚧</h2>
+
+<p>
+This section is currently under development.
+</p>
+
+<br><br>
+
+<button onclick="cfop()">⬅ Back</button>
+
+`;
+
+}
+
+
+function roux(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Roux Method</h1>
+
+<h2>🚧 Coming Soon! 🚧</h2>
+
+<p>
+This section is currently under development.
+</p>
+
+<br><br>
+
+<button onclick="threeByThree()">⬅ Back</button>
+
+`;
+
+}
+
+
+function fullOLL(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>fullOLL</h1>
+
+<h2>🚧 Coming Soon! 🚧</h2>
+
+<p>
+This section is currently under development.
+</p>
+
+<br><br>
+
+<button onclick="threeByThree()">⬅ Back</button>
+
+`;
+
+}
+
+
+function WACHATULA(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>TULA</h1>
+
+<img src="images/Tula.webp" width="700">
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function info(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>ℹ️ About ADVANCCUBER</h1>
+
+<p>
+Welcome to ADVANCCUBER!
+</p>
+
+<p>
+This website provides Rubik's Cube algorithms and methods
+for beginners and advanced cubers.
+</p>
+
+<p>
+Created by:<br>
+<b>Alvaro Gilby Kushendratmo</b>
+</p>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+home();
+
+</script>
+
+</body>
+
+</html>
+
