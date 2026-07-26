@@ -45,6 +45,15 @@ img{
     right:15px;
 }
 
+.Notation{
+    position:fixed;
+    top:145px;
+    right:15px;
+}
+
+
+
+
 </style>
 
 </head>
@@ -63,6 +72,8 @@ function home() {
 
 document.getElementById("app").innerHTML = `
 
+
+
 <img src="images/ADVANCCUBERlogo.jpeg" width="180">
 
 <h1>ADVANCECUBER</h1>
@@ -71,9 +82,16 @@ document.getElementById("app").innerHTML = `
 
 <h2>Choose your Cube</h2>
 
-<button onclick="twoByTwo()">2x2 Cube</button>
+<button onclick="twoByTwo()">
+    <img src="images/TxT.jpeg" width="100">
+    <br>
+    2x2 Cube
+</button>
 
-<button onclick="threeByThree()">3x3 Cube</button>
+<button onclick="threeByThree()">
+    <img src="images/TbT.jpeg" width="100">
+    <br>3x3 Cube
+</button>
 
 <button class="donate" onclick="donate()">
     Donate☕
@@ -84,6 +102,21 @@ document.getElementById("app").innerHTML = `
 <button class="info" onclick="info()">
     ℹ️ Info
 </button>
+
+<button class="Notation" onclick="Notation()">
+    Notation</button>
+
+
+<button onclick="Sq1()">
+    <img src="images/Sq1.jpeg" width="100">
+    <br>
+    Square-1</button>
+
+<button onclick="fourbyfour()">
+    <img src="images/FxF.jpeg" width="100"
+    <br>
+    4x4 Cube</button>
+
 
 `;
 
@@ -97,9 +130,15 @@ document.getElementById("app").innerHTML=`
 
 <h1>2x2 Methods</h1>
 
-<button onclick="ortega()">Ortega</button>
+<button onclick="ortega()">
+    <img src="images/2x2 OLL.jpeg" width="50">
+    <br>
+    Ortega</button>
 
-<button onclick="cll()">CLL</button>
+<button onclick="cll()">
+    <img src="images/2x2 CLL.jpeg" width="50">
+    <br>
+    CLL</button>
 
 <br><br>
 
@@ -117,9 +156,15 @@ document.getElementById("app").innerHTML=`
 
 <h1>Ortega</h1>
 
-<button onclick="ortegaOLL()">OLL</button>
+<button onclick="ortegaOLL()">
+    <img src="images/2x2 OLL.jpeg" width="50">
+    <br>
+    OLL</button>
 
-<button onclick="ortegaPBL()">PBL</button>
+<button onclick="ortegaPBL()">
+    <img src="images/2x2 PBL.jpeg" width="100"
+    <br>
+    PBL</button>
 
 <br><br>
 
@@ -388,11 +433,11 @@ document.getElementById("app").innerHTML=`
 
 <h1>PLL</h1>
 
-<h2>🚧 Coming Soon! 🚧</h2>
+<img src="images/3x3 PLL.jpeg"  width="700">
 
-<p>
-This section is currently under development.
-</p>
+<br><br>
+
+<img src="images/3x3 PLL 2.jpeg" width="700">
 
 <br><br>
 
@@ -468,7 +513,7 @@ document.getElementById("app").innerHTML=`
 <h1>ℹ️ About ADVANCCUBER</h1>
 
 <p>
-Welcome to ADVANCCUBER!
+Welcome to ADVANCCUBER V1.1!
 </p>
 
 <p>
@@ -489,7 +534,133 @@ Created by:<br>
 
 }
 
-home();
+
+function Notation(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>NOTATION</h1>
+
+<img src="images/3x3 Notation.jpeg" width="700>"
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+
+function Sq1(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>Square1</h1>
+
+<button onclick="CO()">CO</button>
+
+<button onclick="EO()">EO</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+
+function CO(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>CO alg</h1>
+
+<img src="Images/Sq1 CO.jpeg" width="700">
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+
+`;
+
+}
+
+
+function EO(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>EO alg</h1>
+
+<img src="Images/Sq1 EO.jpeg" width="700">
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+
+function fourbyfour(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>4x4 Cube</h1>
+
+<button onclick="OLLParity()">OLL Parity</button>
+
+<button onclick="PLLParity()">PLL Parity</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function OLLParity(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>4x4 OLL parity alg</h1>
+
+<img src="Images/4x4 OLL parity.jpeg" width="700">
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function PLLParity(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>4x4 PLL parity alg</h1>
+
+<img src="Images/4x4 PLL parity.jpeg" width="700">
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+
+
+
+home()
+
 
 </script>
 
