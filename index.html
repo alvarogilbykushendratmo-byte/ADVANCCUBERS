@@ -51,7 +51,35 @@ img{
     right:15px;
 }
 
+.Timer{
+    position:fixed;
+    top:210px;
+    right:15px;
+}
 
+.secret{
+    width:5px;
+    height:5px;
+    padding:0;
+    margin:2px;
+    border:none;
+    cursor:pointer;
+}
+
+.nooneknow{
+    position:fixed;
+    top:145px;
+    left:15px;
+}
+
+#codeInput {
+    width: 90%;
+    height: 500px;
+    font-size: 100px;
+    padding: 15px;
+    font-family: monospace;
+    resize: vertical;
+}
 
 
 </style>
@@ -67,6 +95,280 @@ img{
 <div id="app"></div>
 
 <script>
+
+
+
+let timerInterval;
+let startTime;
+let running = false;
+
+function timer(){
+
+document.getElementById("app").innerHTML = `
+
+<h1>⏱️ ADVANCCUBER TIMER</h1>
+
+<p id="scramble" style="font-size: 24px;">
+    Klik New Scramble
+</p>
+
+<button onclick="newScramble()">🔀 New Scramble</button>
+
+<button onclick="copyScramble()">📋 Copy Scramble</button>
+
+<h1 id="timerDisplay"
+    style="font-size: 120px; cursor: pointer;"
+    onclick="toggleTimer()">
+    0.00
+</h1>
+
+
+
+<select id="cubeSelect" onchange="newScramble()">
+    <option value="2x2">2x2</option>
+    <option value="3x3">3x3</option>
+    <option value="4x4">4x4</option>
+</select>
+
+<div>
+    <button onclick="addTwo()">+2</button>
+    <button onclick="setDNF()">DNF</button>
+</div>
+
+<button onclick="copyTime()">📋 Copy Time</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function startTimer(){
+
+if(running) return;
+
+document.getElementById("timerDisplay").textContent = "0.00";
+
+running = true;
+startTime = Date.now();
+
+timerInterval = setInterval(function(){
+
+let elapsed = (Date.now() - startTime) / 1000;
+
+document.getElementById("timerDisplay").textContent =
+formatTime(elapsed);
+
+}, 10);
+
+}
+
+function stopTimer(){
+
+if(!running) return;
+
+running = false;
+
+clearInterval(timerInterval);
+
+}
+
+function resetTimer(){
+
+clearInterval(timerInterval);
+
+running = false;
+
+document.getElementById("timerDisplay").textContent = "0.00";
+
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.code === "Space") {
+
+        event.preventDefault();
+
+        toggleTimer();
+
+    }
+
+});
+
+
+function toggleTimer(){
+
+    if(running){
+        stopTimer();
+    } else {
+        startTimer();
+    }
+
+}
+
+function copyTime(){
+
+    let time = document.getElementById("timerDisplay").textContent;
+
+    navigator.clipboard.writeText(time);
+
+}
+
+
+function addTwo(){
+
+    let display = document.getElementById("timerDisplay");
+
+    if(display.textContent === "DNF") return;
+
+    let parts = display.textContent.split(":");
+
+    let time;
+
+    if(parts.length === 2){
+        time = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+    } else {
+        time = parseFloat(parts[0]);
+    }
+
+    time += 2;
+
+    display.textContent = formatTime(time);
+
+}
+
+
+function setDNF(){
+
+    document.getElementById("timerDisplay").textContent = "DNF";
+
+}
+
+
+function formatTime(seconds){
+
+    let minutes = Math.floor(seconds / 60);
+    let remainingSeconds = seconds % 60;
+
+    if(minutes > 0){
+        return minutes + ":" + remainingSeconds.toFixed(2).padStart(5, "0");
+    }
+
+    return remainingSeconds.toFixed(2);
+}
+
+function newScramble(){
+
+    let cube = document.getElementById("cubeSelect").value;
+
+    let moves;
+    let length;
+
+    if(cube === "2x2"){
+
+        moves = ["R", "U", "F"];
+        length = 11;
+
+    }
+
+    else if(cube === "3x3"){
+
+        moves = ["R", "L", "U", "D", "F", "B"];
+        length = 20;
+
+    }
+
+    else if(cube === "4x4"){
+
+        moves = [
+            "R", "L",
+            "U", "D",
+            "F", "B",
+            "Rw", "Lw",
+            "Uw", "Dw",
+            "Fw", "Bw"
+        ];
+
+        length = 40;
+    }
+
+
+    let modifiers = ["", "'", "2"];
+
+    let scramble = [];
+
+    let lastAxis = "";
+
+
+    function getAxis(move){
+
+        if(move === "R" || move === "L" ||
+           move === "Rw" || move === "Lw"){
+
+            return "RL";
+
+        }
+
+        if(move === "U" || move === "D" ||
+           move === "Uw" || move === "Dw"){
+
+            return "UD";
+
+        }
+
+        if(move === "F" || move === "B" ||
+           move === "Fw" || move === "Bw"){
+
+            return "FB";
+
+        }
+
+    }
+
+
+    for(let i = 0; i < length; i++){
+
+        let move;
+        let axis;
+
+        do{
+
+            move = moves[Math.floor(Math.random() * moves.length)];
+
+            axis = getAxis(move);
+
+        }while(axis === lastAxis);
+
+
+        let modifier =
+            modifiers[Math.floor(Math.random() * modifiers.length)];
+
+
+        scramble.push(move + modifier);
+
+        lastAxis = axis;
+
+    }
+
+
+    document.getElementById("scramble").textContent =
+        scramble.join(" ");
+
+}
+
+function copyScramble(){
+
+    let scramble = document.getElementById("scramble").textContent;
+
+    navigator.clipboard.writeText(scramble);
+
+}
+
+
+
+
 
 function home() {
 
@@ -117,6 +419,17 @@ document.getElementById("app").innerHTML = `
     <br>
     4x4 Cube</button>
 
+    <button class="Timer" onclick="timer()">
+    ⏱️ Timer
+</button>
+
+<button class="secret" onclick="secret()"></button>
+
+<button class="nooneknow" onclick="codePage()">???</button>
+
+<button onclick="Pyra()">Pyraminx</button>
+
+
 
 `;
 
@@ -130,10 +443,18 @@ document.getElementById("app").innerHTML=`
 
 <h1>2x2 Methods</h1>
 
+<h1>Beginner</h1>
+
+...
+
+<h1>Intermidate</h1>
+
 <button onclick="ortega()">
     <img src="images/2x2 OLL.jpeg" width="50">
     <br>
     Ortega</button>
+
+<h1>ADVANCE</h1>
 
 <button onclick="cll()">
     <img src="images/2x2 CLL.jpeg" width="50">
@@ -372,9 +693,19 @@ function threeByThree(){
 
 document.getElementById("app").innerHTML=`
 
+<h1>3x3</h1>
+
+<h1>Beginner</h1>
+
+<button onclick="Beginner3x3()">Beginner Method</button>
+
+<h1>ADVANCE</h1>
+
 <button onclick="cfop()">CFOP</button>
 
 <button onclick="roux()">Roux</button>
+
+
 
 <br><br>
 
@@ -454,11 +785,9 @@ document.getElementById("app").innerHTML=`
 
 <h1>Roux Method</h1>
 
-<h2>🚧 Coming Soon! 🚧</h2>
+<button onclick="EOroux()">EO</button>
 
-<p>
-This section is currently under development.
-</p>
+<button onclick="LSE()">LSE</button>
 
 <br><br>
 
@@ -656,6 +985,446 @@ document.getElementById("app").innerHTML=`
 
 }
 
+
+function EOroux(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>EO ROUX</h1>
+
+<p>how to set up to the basic case</p>
+
+<img src="images/ROUX EO BasicCase.jpeg" width="700">
+
+<br><br>
+
+<button onclick="roux()">⬅ Back</button>
+
+`;
+
+}
+
+function LSE(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>LSE</h1>
+
+<h2>🚧 Coming Soon! 🚧</h2>
+
+<p>
+This section is currently under development.
+</p>
+
+<br><br>
+
+<button onclick="roux()">⬅ Back</button>
+
+`;
+
+}
+
+function Beginner3x3(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>WELCOME TO BEGINNER 3x3 METHOD</h1>
+
+<h2>i hope you can solve 3x3 rubik's cube after following my steps</h2>
+
+<p>this is 3x3 piece</p>
+
+<img src="images/3x3 Piece.jpeg" width="475">
+
+<h2>This Is Notation</h2>
+
+<img src="images/3x3 Notation.jpeg"
+
+<br><br>
+
+<h2> and this is the tutorial </h2>
+
+<p>..............................</p>
+
+<h2>step-1 "make a Daisy flower"</h2>
+
+<img src="images/Daisy.jpeg" width="475">
+
+<h1>step-2 "make a white cross"</h1>
+
+<h2> After making the Daisy, match the side color of each Edge piece with the same-colored Center.
+
+Once the colors match, turn front face 2 times (F2).</h2>
+
+<img src="images/Daisy2.jpeg" width="475">
+
+<h2> Repeat this for all four Edge pieces until you get the White Cross. </h2>
+
+<img src="images/3x3 white cross.jpeg" width="475">
+
+<h1>Step-3 Solve the white corners</h1>
+
+<img src="images/3x3 white corner.jpeg" width="475">
+
+<h2>After making a white cross you must solve the all 4 white corner and put it on the bottom layer</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/corner.jpeg" width="475">
+
+<h2>to insert a white corner you must find a white corner that have 2 other color that mach with 2 center
+...Don't worry about whether the Corner is facing right, forward, or up. </h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3 Corner.jpeg" width="475">
+
+<h2>Place the Corner between the two Center pieces that match its colors</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3 Corner.jpeg" width="475">
+
+<h2>Then do a</h2>
+
+<h1>R U R' U'</h1>
+
+<h2> algorithm </h2>
+
+<h2> to put a corner piece to the bottom layer..
+and if the corner not in the bottom layer.. do 
+<br>
+<strong>" R U R' U' "</strong>
+<br>
+ again
+unti the corner piece is in the bottom layer</h2>
+
+<h2>But if the Corner is already in the Bottom Layer but is facing the wrong direction,</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3 Wrong corner.jpeg" width="475">
+
+<h2>do R U R' U' and place the corner between the two center pieces that match
+its colors.
+<br>
+and do <strong>R U R' U'</strong>
+again until the center piece is in the bottom layer
+and facing down..</h2>
+
+<h2>Do the same thing on each side.</h2>
+
+<img src="Beginnerimages/corner.jpeg" width="475">
+
+<h1>Step-4 "Middle Edge pairing"</h1>
+
+<img src="images/MEdge.jpeg" width="475">
+
+<h2>To solve a middle edge you must find a edge that have a same color with 2 center</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3LeftMedge.jpeg" width="475">
+
+<h2>put the edge piece on the top layer and match the color with
+the center</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3Edge2.jpeg" width="475">
+
+<h2>If the Edge match in front(red) hold your rubik's cube in front and do</h2>
+
+<h1><strong>U R U R' U' F' U' F</strong></h1>
+
+<img src="BeginnerImages/3x3LeftMedge.jpeg" width="475">
+
+<h2>But if the edge match in Right(Green) (I USE REDAND GREEN JUST FOR EXAMPLE)
+do</h2>
+
+<h1><strong>U' F' U' F U R U R'</strong></h1>
+
+<img src="BeginnerImages/3x3RMedge.jpeg" width="475">
+
+<h2>Do the same thing on each side</h2>
+<h1>................................................................</h1>
+
+<h1><strong>STEP-5 "OLL"</strong></h1>
+
+<img src="images/3x3 beginner OLL.jpeg" width="475">
+
+<h2>After solve the middle edge.. you must solve the yellow face(OLL)
+Don't worry.. even OLL have a 7 case.. it still can be solve wit 1 algorithm</h2>
+
+<img src="BeginnerImages/3x3 OLL beginner.jpeg" width="700">
+
+<h2> for 7 Case use <strong>R U R' U R U2 R'</strong> and for 3 <strong>"SpEcIAL"</strong> case
+you can use <strong>F R U R' U' F'</strong> or <strong>R U R' U R U2 R'</strong>
+ It depends on the case. and if the yellow face not solved.. just look at the case and do
+a algorithm..</h2>
+
+<h1><strong>STEP-5 "PLL AND SOLVE THE CUBE"</strong></h1>
+
+<img src="BeginnerImages/3x3 Beginner PLL2.jpeg" width="475">
+
+<h2>After solving OLL you must solve the top layer (PLL) to solve the entire cube
+you must have a headlight</h2>
+
+<h1>LIKE THIS</h1>
+
+<img src="BeginnerImages/3x3 Beginner PLL2.jpeg" width="475">
+
+<h2> Put the headlight in the left and do</h2>
+
+<h1><strong>R U2 R' U' R U2 L' U R' U' L</strong></h1>
+
+<h2> and you will have a 
+headlight in each side......And if no headlight you can do <h1><strong>R U2 R' U' R U2 L' U R' U' L</strong></h1> algorithm
+anywhere.. and now you have a headlight</h2>
+
+<h2> after you have a headlight in all side.. you will get a 3 case</h2>
+
+<h1>CASE 1</h1>
+<h2> you will have a 1 solved side.. put the solved side on the back
+and you must look at the "not solved piece" in front of you..
+and pay close attention, should the piece go to the right or to the left?</h2>
+
+<h2> if the piece should go to the left like this </h2>
+
+<img src="BeginnerImages/PLL1.jpeg" width="475">
+
+<h2> then do a</h2>
+<h1><strong>F2 U L R' F2 L' R U F2</strong></h1>
+
+<h2> if the piece should go to the right like this </h2>
+
+<img src="BeginnerImages/PLL2.jpeg" width="475">
+
+<h2> then do a</h2>
+<h1><strong>F2 U' L R' F2 L' R U' F2</strong></h1>
+
+<br><br>
+
+<h2> if you dont have a solved side do a 
+
+<h1><strong>F2 U' L R' F2 L' R U' F2</strong></h1>
+
+or <h1><strong>F2 U L R' F2 L' R U F2</strong></h1>
+
+and look at the case and do the algorithm again</h2>
+
+<h1>now you solve a rubiks cube</h1>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+
+
+`;
+
+}
+
+function secret(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>FIND A SECRET AMONG THESE BUTTON</h1>
+
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="ITS_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+<button onclick="NOTHIN_HERE()"></button>
+
+<br><br>
+
+<button onclick="roux()">⬅ Back</button>
+
+`;
+
+}
+
+function NOTHIN_HERE(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+<h1>NOTHING HERE BRO...</h1>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function ITS_HERE(){
+
+document.getElementById("app").innerHTML = `
+
+<h1>🎉 YOU FOUND THE SECRET!</h1>
+
+<video style="max-width: 90%;" controls>
+    <source src="Video/IDKWTHISDIS.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+`;
+
+}
+
+function codePage() {
+    document.getElementById("app").innerHTML = `
+        <h1>???</h1>
+
+        <textarea id="codeInput"
+            placeholder="Type here..."
+            spellcheck="false"></textarea>
+
+            <br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+    `;
+}
+
+function Pyra() {
+    document.getElementById("app").innerHTML = `
+
+<h1>PYRAMINX</h1>
+
+<h1><strong>Beginner</strong></h1>
+
+<button onclick="L4Eb()">Beginner L4E</button>
+
+<br><br>
+
+<button onclick="home()">⬅ Back</button>
+
+
+    `;
+}
+
+function L4Eb(){
+
+document.getElementById("app").innerHTML = `
+
+<h1><strong>L4E BEGINNER</strong></h1>
+
+<button onclick="VShape()">V SHAPE</button>
+
+<br><br>
+
+<button onclick="Pyra()">⬅ Back</button>
+
+`;
+
+}
+
+function VShape(){
+
+document.getElementById("app").innerHTML=`
+
+<img src="BeginnerImages/Pyra.jpeg" width="475">
+<img src="BeginnerImages/Pyra2.jpeg" width="475">
+<img src="BeginnerImages/Pyra3.jpeg" width="475">
+<img src="BeginnerImages/Pyra4.jpeg" width="475">
+
+
+<br><br>
+
+<button onclick="Pyra()">⬅ Back</button>
+
+`;
+
+}
 
 
 
